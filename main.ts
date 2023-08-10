@@ -35,10 +35,12 @@ namespace TTS {
     //% weight=30
     export function speak(word : string) { 
         _len = word.length;
+		let byteArray = new TextEncoder().encode(word);
+		_len = byteArray.length;
         let length = 0;
         let head = [0xfd, 0, 0, 0, 0];
         for (let i = 0; i < _len; i++) {
-            _unicode.push(word.charCodeAt(i) & 0x7f);
+            _unicode.push(byteArray[i]);
         }
         // sendPack(START_SYNTHESIS1, _unicode, _len);
         length = 2 + _len;
